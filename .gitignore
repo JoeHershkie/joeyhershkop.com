@@ -1,0 +1,11 @@
+# Build output
+_site/
+
+# Dependencies
+node_modules/
+
+# Mac
+.DS_Store
+
+# WebStorm
+.idea/

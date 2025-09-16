@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'Apple Garamond';
+  src: url('/fonts/AppleGaramond-Light.ttf') format('truetype');
+}
+html { height: 100%; }
+body {
+  font-family: 'Apple Garamond', serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  background-color: #f7eeda !important;
+}
+main { flex-grow: 1; }
+h1 {
+  font-size: 10em;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  margin-left: 4rem;
+  font-weight: normal;
+}
+h2 {
+  font-size: 3em;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  margin-left: 4rem;
+}
+p {
+  font-size: 3em;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  margin-left: 4rem;
+}
+audio {
+  display: block;
+  margin-left: 4rem;
+  width: 50%;
+}
+nav { margin-bottom: 5rem; }
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 4rem;
+  display: flex;
+  justify-content: left;
+  gap: 2rem;
+}
+nav a {
+  text-decoration: none;
+  color: black;
+  font-size: 3em;
+}
+nav a:hover { text-decoration: underline; }
+footer {
+  margin-right: 4rem;
+  margin-bottom: 2rem;
+}
+footer p {
+  text-align: right;
+  font-size: 2rem;
+  margin-left: 0;
+}
+h1 a {
+  color: inherit;
+  text-decoration: none;
+}
