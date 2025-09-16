@@ -9,7 +9,7 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  background-color: #07eeda !important;
+  background-color: #f7eeda !important;
 }
 main { flex-grow: 1; }
 h1 {
