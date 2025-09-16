@@ -1,0 +1,55 @@
+# This is the name of the workflow, which will be displayed in the "Actions" tab of your GitHub repository.
+name: Deploy Website
+
+# This section defines the trigger for the workflow.
+# It will run automatically on every 'push' event to the 'main' branch.
+on:
+  push:
+    branches:
+      - main
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel.
+jobs:
+  # This workflow contains a single job called "deploy".
+  deploy:
+    # The type of runner that the job will run on. We use the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job.
+    steps:
+      # Step 1: Check out your repository code so the workflow can access it.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up the specific version of Node.js needed for Eleventy.
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Using a recent Long-Term Support (LTS) version of Node.
+
+      # Step 3: Install the project dependencies (Eleventy) defined in package.json.
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run the build script to generate the static site into the '_site' folder.
+      - name: Build the site
+        run: npm run build
+
+      # Step 5: Deploy the contents of the '_site' folder to your server.
+      - name: Deploy to VPS via rsync
+        uses: easingthemes/ssh-deploy@main # A popular community action for SSH/rsync.
+        with:
+          # The private SSH key we stored in the repository's secrets.
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          # The arguments for the rsync command.
+          # -r: recursive, -l: copy symlinks as symlinks, -g: preserve group, -o: preserve owner, -D: preserve device files, -z: compress file data, -v: verbose, -c: checksum
+          # --delete: This is crucial! It removes files on the server that are no longer in your build.
+          ARGS: "-rlgoDzvc --delete"
+          # The source directory from our build step. The trailing slash is important!
+          SOURCE: "_site/"
+          # Your server's domain name or IP address.
+          REMOTE_HOST: "joeyhershkop.com"
+          # The user to log in as on the server.
+          REMOTE_USER: "ubuntu"
+          # The target directory on the server where the files should go. The trailing slash is important!
+          TARGET: "/home/ubuntu/docker/data/website/"
