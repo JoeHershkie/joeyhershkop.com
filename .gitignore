@@ -1,11 +1,15 @@
 # Build output
+dist/
 _site/
+.astro/
 
 # Dependencies
 node_modules/
 
-# Mac
+# Environment / Cache
+.env*
 .DS_Store
 
-# WebStorm
+# IDE
 .idea/
+.vscode/
