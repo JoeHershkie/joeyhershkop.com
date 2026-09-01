@@ -15,6 +15,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         Solo Project &bull; Python (Spatial ETL), SwiftUI (Native iOS), TypeScript (Web GIS)
       </p>
       <div class="work-links">
+        <a href="https://github.com/JoeHershkie/parkking" target="_blank" rel="noopener noreferrer">Main GitHub &rarr;</a>
         <a href="https://github.com/JoeHershkie/parkking-pipeline" target="_blank" rel="noopener noreferrer">Pipeline GitHub &rarr;</a>
         <a href="https://github.com/JoeHershkie/parkking-ios" target="_blank" rel="noopener noreferrer">iOS GitHub &rarr;</a>
         <a href="https://github.com/JoeHershkie/parkking-web" target="_blank" rel="noopener noreferrer">Web GitHub &rarr;</a>
@@ -70,9 +71,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         I designed and built an integrated geospatial intelligence suite across data engineering, native mobile, and web:
       </p>
       <ul>
-        <li><strong>1. Spatial ETL &amp; NLP Pipeline (<code>parkking-pipeline</code>):</strong> An installable Python package using GeoPandas and Shapely that parses freeform legal text into structured temporal schedules, walks Toronto Centreline (TCL) street graphs to resolve intersection nodes, projects spans onto physical road edge polygons, and emits schema-validated GeoJSON with discrete coverage atoms for overlapping bylaws.</li>
-        <li><strong>2. Offline-First iOS Client (<code>parkking-ios</code>):</strong> A native SwiftUI + MapKit mobile application built with zero third-party dependencies. Features an offline curb bylaw engine that evaluates instant parking verdicts with zero network latency, custom time preset scrubbing, and 60/120 fps viewport polyline batching.</li>
-        <li><strong>3. Responsive Web Client (<code>parkking-web</code>):</strong> An interactive, mobile-first web map built with TypeScript and MapLibre GL for instant browser-based parking lookups and reverse geocoding without requiring app installation.</li>
+        <li><strong>1. Spatial ETL &amp; NLP Pipeline</strong> (<a href="https://github.com/JoeHershkie/parkking-pipeline" target="_blank" rel="noopener noreferrer" class="text-link"><code>parkking-pipeline</code></a>): An installable Python package using GeoPandas and Shapely that parses freeform legal text into structured temporal schedules, walks Toronto Centreline (TCL) street graphs to resolve intersection nodes, projects spans onto physical road edge polygons, and emits schema-validated GeoJSON with discrete coverage atoms for overlapping bylaws.</li>
+        <li><strong>2. Offline-First iOS Client</strong> (<a href="https://github.com/JoeHershkie/parkking-ios" target="_blank" rel="noopener noreferrer" class="text-link"><code>parkking-ios</code></a>): A native SwiftUI + MapKit mobile application built with zero third-party dependencies. Features an offline curb bylaw engine that evaluates instant parking verdicts with zero network latency, custom time preset scrubbing, and 60/120 fps viewport polyline batching.</li>
+        <li><strong>3. Responsive Web Client</strong> (<a href="https://github.com/JoeHershkie/parkking-web" target="_blank" rel="noopener noreferrer" class="text-link"><code>parkking-web</code></a>): An interactive, mobile-first web map built with TypeScript and MapLibre GL for instant browser-based parking lookups and reverse geocoding without requiring app installation.</li>
         <li><strong>Production Testing Discipline:</strong> Pytest with golden geometry regression fixtures, Vitest coverage gates, Ruff linting, and cross-language schedule parity tests (Python &harr; TypeScript &harr; Swift) ensuring consistent rule evaluation across all clients.</li>
       </ul>
 
