@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Case Study: Stripe Billing & Ingestion Engine — Joey Hershkop" 
+  description="Building resilient, idempotent, signature-verified Stripe subscription billing for a live B2B SaaS platform."
+>
+  <a href="/work/" class="back-link">&larr; Back to all projects</a>
+
+  <article class="case-study">
+    <header class="case-study-header">
+      <h2>Building End-to-End Stripe Billing for a B2B SaaS Platform</h2>
+      <p class="case-study-meta">
+        Production Engineering &bull; PHP, PostgreSQL, Stripe API, HMAC Webhook Security, React, Playwright
+      </p>
+    </header>
+
+    <div class="case-study-content">
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-value">100%</div>
+          <div class="metric-label">HMAC Verified Events</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">0</div>
+          <div class="metric-label">Duplicate Event Drift</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">Full-Stack</div>
+          <div class="metric-label">API, Schema &amp; UI Ownership</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">Live</div>
+          <div class="metric-label">In Production with Real Clients</div>
+        </div>
+      </div>
+
+      <h3>The Problem</h3>
+      <p>
+        A growing B2B SaaS platform needed a robust, fully automated billing system: self-serve customer checkout, tiered subscription plans, upgrades, downgrades, and billing portal access.
+      </p>
+      <p>
+        Handling financial transactions is uniquely unforgiving. Network timeouts, out-of-order webhook delivery, or duplicate retry requests can easily corrupt customer subscription states, double-charge accounts, or grant unauthorized platform access. The system required absolute integrity across every layer of the billing lifecycle.
+      </p>
+
+      <h3>What I Built</h3>
+      <p>
+        I took primary ownership of the billing architecture from database schema migrations to frontend client interfaces:
+      </p>
+      <ul>
+        <li><strong>Hardened Ingestion Middleware:</strong> Engineered custom PSR-7 middleware that intercepts the raw, unparsed HTTP request body prior to body parsing, enabling strict HMAC-SHA256 signature verification against Stripe's signing secrets.</li>
+        <li><strong>Idempotent Event Ingestion:</strong> Built a deduplication layer keyed on Stripe Event IDs to ensure that network retries and duplicate webhooks execute as safe no-ops without double-applying mutations.</li>
+        <li><strong>PostgreSQL State Mirroring:</strong> Designed a normalized database schema (subscriptions, billing periods, customer mappings) that serves as a fast, local source of truth for permission gating without incurring blocking third-party API calls on critical user read paths.</li>
+        <li><strong>Transactional Admin Console:</strong> Created internal tooling for operations teams to safely view audit trails, manage comp accounts, and resolve billing edge cases.</li>
+        <li><strong>React Subscription UI:</strong> Built a responsive plan comparison interface with billing cycle toggles, Stripe Checkout flows, and Customer Portal integration.</li>
+      </ul>
+
+      <h3>The Interesting Engineering</h3>
+
+      <h4>1. Cryptographic Webhook Ingestion</h4>
+      <p>
+        Webhooks arrive over public HTTP endpoints. To defend against spoofing and replay attacks, Stripe signs payloads using HMAC-SHA256. However, standard PHP and framework body parsers mutate or normalize whitespace and string encoding, invalidating the hash calculation.
+      </p>
+      <p>
+        I implemented <code>StripeWebhookRawBodyMiddleware</code> to capture byte-exact payloads before framework parsing, paired with a comprehensive PHPUnit test suite validating both valid signatures and rejected tampering attempts.
+      </p>
+
+      <h4>2. Idempotency &amp; State Machine Integrity</h4>
+      <p>
+        Stripe guarantees at-least-once delivery, meaning webhooks can arrive multiple times or out of order (e.g., an <code>invoice.payment_succeeded</code> arriving before a <code>customer.subscription.created</code> finishes committing).
+      </p>
+      <p>
+        I implemented atomic upsert operations, database transaction boundaries, and state deduplication guards. If an event has already been recorded in the event ledger, subsequent arrivals are immediately acknowledged with a 200 OK without re-executing business logic.
+      </p>
+
+      <h4>3. Decoupling User Reads from External APIs</h4>
+      <p>
+        Querying the Stripe API synchronously on every user page load or permission check introduces unacceptable latency and external point-of-failure risks. By modeling subscription state directly in PostgreSQL and maintaining high-fidelity event synchronization via webhooks, user queries execute against local relational indexes in sub-milliseconds.
+      </p>
+
+      <h3>What Was Hard &amp; Lessons Learned</h3>
+      <p>
+        The biggest takeaway was that payment engineering is 10% happy-path checkout logic and 90% failure mode management: network dropouts, webhook replays, invoice failure cascades, and raw payload serialization quirks. Writing deterministic unit and integration tests around adversarial inputs proved essential to maintaining long-term stability.
+      </p>
+
+      <div class="callout-box">
+        <p><strong>Outcome:</strong> The billing infrastructure was shipped and is operating reliably in production with real clients, enabling self-serve subscription monetization and automated lifecycle management.</p>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

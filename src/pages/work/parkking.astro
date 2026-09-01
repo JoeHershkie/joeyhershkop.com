@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Case Study: Parkking — Joey Hershkop" 
+  description="Turning Toronto's legal parking bylaws into 21,000+ geocoded curb segments on an interactive map."
+>
+  <a href="/work/" class="back-link">&larr; Back to all projects</a>
+
+  <article class="case-study">
+    <header class="case-study-header">
+      <h2>Parkking: Turning Toronto Parking Bylaws Into a Live Map</h2>
+      <p class="case-study-meta">
+        Solo Project &bull; Python (Spatial ETL), SwiftUI (Native iOS), TypeScript (Web GIS)
+      </p>
+      <div class="work-links">
+        <a href="https://github.com/JoeHershkie/parkking-pipeline" target="_blank" rel="noopener noreferrer">Pipeline GitHub &rarr;</a>
+        <a href="https://github.com/JoeHershkie/parkking-ios" target="_blank" rel="noopener noreferrer">iOS GitHub &rarr;</a>
+        <a href="https://github.com/JoeHershkie/parkking-web" target="_blank" rel="noopener noreferrer">Web GitHub &rarr;</a>
+      </div>
+    </header>
+
+    <div class="case-study-content">
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-value">76,849</div>
+          <div class="metric-label">Raw Bylaw Rows</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">21,433</div>
+          <div class="metric-label">Map Features Emitted</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">99.2%</div>
+          <div class="metric-label">Highway Resolve Rate</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">&lt; 50ms</div>
+          <div class="metric-label">Tap-to-Verdict Query</div>
+        </div>
+      </div>
+
+      <div class="case-study-gallery">
+        <figure>
+          <img src="/images/parkking/01-launch-city.png" alt="Parkking iOS city overview showing geocoded curb parking restrictions" />
+          <figcaption>Parkking iOS: Citywide geocoded curb restriction overview.</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/parkking/03-neighborhood-zoom.png" alt="Parkking iOS neighborhood zoom and curb selection popup" />
+          <figcaption>Parkking iOS: Neighborhood zoom, curb inspection, and instant verdict.</figcaption>
+        </figure>
+      </div>
+
+      <h3>The Problem</h3>
+      <p>
+        The City of Toronto publishes parking restrictions as open data, but every single restriction is recorded as descriptive legal prose rather than spatial coordinates:
+      </p>
+      
+      <blockquote>
+        <p>"A point 59 metres north of Elm Avenue and Spadina Road"</p>
+      </blockquote>
+
+      <p>
+        To determine whether you can legally park on a specific curb at 2:30 PM on a Tuesday, you cannot just query a simple boundary box. You need to parse unstructured legal strings, resolve street names and intersections against the city's official Centreline road graph, compute exact physical curb geometries, resolve overlapping multi-bylaw conflicts, and deliver a responsive interface.
+      </p>
+
+      <h3>What I Built: The 3 Core Pillars</h3>
+      <p>
+        I designed and built an integrated geospatial intelligence suite across data engineering, native mobile, and web:
+      </p>
+      <ul>
+        <li><strong>1. Spatial ETL &amp; NLP Pipeline (<code>parkking-pipeline</code>):</strong> An installable Python package using GeoPandas and Shapely that parses freeform legal text into structured temporal schedules, walks Toronto Centreline (TCL) street graphs to resolve intersection nodes, projects spans onto physical road edge polygons, and emits schema-validated GeoJSON with discrete coverage atoms for overlapping bylaws.</li>
+        <li><strong>2. Offline-First iOS Client (<code>parkking-ios</code>):</strong> A native SwiftUI + MapKit mobile application built with zero third-party dependencies. Features an offline curb bylaw engine that evaluates instant parking verdicts with zero network latency, custom time preset scrubbing, and 60/120 fps viewport polyline batching.</li>
+        <li><strong>3. Responsive Web Client (<code>parkking-web</code>):</strong> An interactive, mobile-first web map built with TypeScript and MapLibre GL for instant browser-based parking lookups and reverse geocoding without requiring app installation.</li>
+        <li><strong>Production Testing Discipline:</strong> Pytest with golden geometry regression fixtures, Vitest coverage gates, Ruff linting, and cross-language schedule parity tests (Python &harr; TypeScript &harr; Swift) ensuring consistent rule evaluation across all clients.</li>
+      </ul>
+
+      <h3>The Interesting Engineering</h3>
+
+      <h4>1. Legal Prose &rarr; Typed Parse Rules</h4>
+      <p>
+        Free-text <code>Between</code> descriptions vary wildly across decades of municipal amendments. I built an ordered pattern-matching engine that classifies text into typed rule definitions (e.g., <code>perfect_offset</code>, <code>block</code>, <code>entire_length</code>). Unmatched strings are recorded in a failure ledger with granular stage and reason codes rather than thrown away, enabling systematic debugging.
+      </p>
+
+      <h4>2. Local Graph-Walking & Physical Curb Projection</h4>
+      <p>
+        Instead of relying on external geocoding APIs, the pipeline operates locally on Toronto Centreline (TCL) graph data. It identifies intersecting street nodes, calculates metric offsets along LineStrings, and slices segments using Shapely in UTM Zone 17N coordinates.
+      </p>
+      <p>
+        Through systematic triage of intersection aliases and normalizers, I reduced unresolvable intersection errors from over 6,600 down to 1,174, achieving a 99.2% highway resolve rate on parsed rows.
+      </p>
+
+      <h4>3. Schema-v2 Coverage Atoms for Overlapping Bylaws</h4>
+      <p>
+        On any given street block, multiple bylaws can overlap (e.g., a "No Parking 7 AM–9 AM" rush-hour rule combined with a "2-Hour Metered Parking 9 AM–6 PM" rule). Rather than rendering overlapping lines that obscure each other, the pipeline sweeps overlapping spans into discrete, non-overlapping <em>coverage atoms</em> with stable identifiers. Each atom carries all contributing legal rules, allowing the client to compute strict verdict precedence without hiding conflicting restrictions.
+      </p>
+
+      <h4>4. Cross-Language Schedule Parity</h4>
+      <p>
+        Parking rules evaluate complex conditions: Ontario statutory holidays, seasonal months, overnight windows, and midnight truncation. The schedule engine is implemented across Python (pipeline), TypeScript (web), and Swift (iOS), validated against a shared test fixture corpus to ensure zero behavioral drift.
+      </p>
+
+      <div class="callout-box">
+        <p><strong>Methodology Note:</strong> Pipeline metrics measure parse throughput and geometric graph resolution. Golden regression tests guard against sample regressions; full ground-truth surveyed curb validation remains an ongoing exploration.</p>
+      </div>
+
+      <h3>Key Takeaways</h3>
+      <p>
+        Parkking demonstrated the value of treating side projects with production-grade engineering: structured failure ledgers, golden test suites, cross-language contracts, and resilient data modeling. The hardest part wasn't drawing lines on a map—it was creating a deterministic, verifiable system out of ambiguous municipal legal prose.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

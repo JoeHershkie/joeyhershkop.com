@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Case Study: Realtime Event Pipeline — Joey Hershkop" 
+  description="Designing an event-driven pub/sub pipeline that synchronizes frontend React Query state with backend webhooks in milliseconds."
+>
+  <a href="/work/" class="back-link">&larr; Back to all projects</a>
+
+  <article class="case-study">
+    <header class="case-study-header">
+      <h2>Realtime Event Pipeline: Bridging Webhooks to Reactive UI</h2>
+      <p class="case-study-meta">
+        Production Systems &bull; Ably Pub/Sub, TanStack React Query, TypeScript, PHP, Webhooks
+      </p>
+    </header>
+
+    <div class="case-study-content">
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-value">&lt; 100ms</div>
+          <div class="metric-label">Server-to-Client Signal</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">Zero</div>
+          <div class="metric-label">Polling Database Overhead</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">React Query</div>
+          <div class="metric-label">Automated Invalidation</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">Live</div>
+          <div class="metric-label">Production Feature</div>
+        </div>
+      </div>
+
+      <h3>The Problem</h3>
+      <p>
+        In modern web applications, critical business state frequently mutates out-of-band on the server. For example, when an external Stripe webhook arrives confirming an invoice payment, or when a partner shares an updated compliance document, the change happens asynchronously in a background worker or webhook handler.
+      </p>
+      <p>
+        Forcing users to manually refresh their browser or running aggressive background polling intervals creates a sluggish user experience and wastes server resources. The application needed a lightweight, scalable mechanism to reflect backend state changes across active browser sessions instantaneously.
+      </p>
+
+      <h3>What I Built</h3>
+      <p>
+        I engineered an event-driven pub/sub synchronization bridge connecting backend webhook handlers to frontend React Query state:
+      </p>
+      <ul>
+        <li><strong>Transactional Server Publishing:</strong> Configured backend controllers to publish lightweight event signals to Ably pub/sub channels strictly after database transaction commits succeed.</li>
+        <li><strong>React Realtime Bridge:</strong> Built a custom React context provider (<code>RealtimeProvider</code>) and lifecycle hook (<code>useSubscriptionChannel</code>) that manages persistent WebSocket connections per authenticated company session.</li>
+        <li><strong>Targeted Cache Invalidation:</strong> Connected incoming channel events to TanStack React Query key invalidators, prompting the client to re-fetch canonical data without passing bloated or unverified payloads across the socket.</li>
+        <li><strong>Document Sharing Integration:</strong> Reused the channel topology to deliver live document list refreshes when collaborative files are shared between organization relationships.</li>
+      </ul>
+
+      <h3>The Interesting Engineering</h3>
+
+      <h4>1. Invalidation Signals vs. Full State Broadcasting</h4>
+      <p>
+        A common pitfall in realtime architectures is attempting to broadcast complete entity trees over WebSockets. This introduces severe synchronization bugs: out-of-order socket packets can overwrite newer local data with stale snapshots, and sensitive fields risk leaking across channel boundaries.
+      </p>
+      <p>
+        Instead, I implemented an <em>invalidation-first pattern</em>. The pub/sub message carries only minimal metadata (e.g., event type and company identifier). Upon receipt, the React client marks the corresponding query key (e.g., <code>['subscription', 'company', companyId]</code>) as stale, triggering an authenticated REST fetch that passes through standard permissions and relational validations.
+      </p>
+
+      <h4>2. Transaction Ordering &amp; Consistency</h4>
+      <p>
+        Realtime notifications must never fire before database mutations commit. If a WebSocket message reaches a fast client before the backend transaction completes, the client's subsequent fetch might retrieve pre-mutation state, resulting in a false "flash" of outdated data.
+      </p>
+      <p>
+        I structured backend handlers so pub/sub publishing occurs exclusively after database commits succeed, ensuring absolute consistency across read replicas and cache stores.
+      </p>
+
+      <h4>3. Connection Lifecycle Management</h4>
+      <p>
+        The client-side provider manages token rotation, graceful reconnects, and background tab transitions. When a user sleeps or switches browser tabs, the client cleanly pauses and re-synchronizes upon focus without flooding the backend with duplicate connection handshakes.
+      </p>
+
+      <div class="callout-box">
+        <p><strong>Result:</strong> Shipped and running in production with real clients, providing seamless UI reactivity for subscription changes and shared document workflows with zero continuous polling overhead.</p>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

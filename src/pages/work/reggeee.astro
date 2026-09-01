@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Case Study: Reggeee — Greenfield Marketplace Architecture — Joey Hershkop" 
+  description="Designing data models for real-world families, hardened Argon2id auth, and a typed React 19 platform for a greenfield marketplace."
+>
+  <a href="/work/" class="back-link">&larr; Back to all projects</a>
+
+  <article class="case-study">
+    <header class="case-study-header">
+      <h2>Reggeee: Greenfield Marketplace Architecture &amp; Auth</h2>
+      <p class="case-study-meta">
+        Greenfield Full-Stack &bull; React 19, TypeScript, Slim 4, PostgreSQL, Redis, Argon2id, Playwright
+      </p>
+    </header>
+
+    <div class="case-study-content">
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-value">React 19</div>
+          <div class="metric-label">Vite &amp; TanStack Query</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">Argon2id</div>
+          <div class="metric-label">Secure Hashing &amp; Anti-Enumeration</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">Redis + DB</div>
+          <div class="metric-label">Hashed Session Architecture</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">End-to-End</div>
+          <div class="metric-label">Schema &rarr; API &rarr; UI &rarr; E2E Tests</div>
+        </div>
+      </div>
+
+      <h3>The Problem</h3>
+      <p>
+        Traditional family software often assumes a simplistic nuclear household: two parents at a single residential address. In reality, modern families have diverse structures—divorced co-parents living at different addresses, step-parents, grandparents, and legal guardians who all need shared access to manage children's schedules, registrations, and medical emergency details.
+      </p>
+      <p>
+        Reggeee was conceived as a two-sided marketplace for children's activity businesses and families. The engineering challenge was taking an early conceptual idea and building a production-grade foundation: a resilient relational schema, secure authentication, and an extensible API-first architecture.
+      </p>
+
+      <h3>What I Owned</h3>
+      <p>
+        I established the technical foundation across the entire stack:
+      </p>
+      <ul>
+        <li><strong>Relational Domain Modeling:</strong> Designed and documented the complete PostgreSQL schema for identity, multi-adult families, children, businesses, offerings (class series vs. single parties), and registrations.</li>
+        <li><strong>Hardened Authentication &amp; Session Layer:</strong> Implemented parent signup, login, and session restore using Argon2id password hashing, HttpOnly cookie transport, Redis live token storage, and SHA-256 hashed audit records in PostgreSQL.</li>
+        <li><strong>Parent &amp; Family Vertical (Live Slice):</strong> Built the end-to-end flow for family creation, child profiles, adult invitation tokens (via shareable short-code URLs), acceptance/decline lifecycles, and primary contact reassignment upon member leave.</li>
+        <li><strong>Contract-Neutral Frontend Architecture:</strong> Rebuilt the frontend in React 19 and TypeScript with Tailwind CSS, TanStack Query, Radix UI primitives, and domain adapters that decouple internal UI components from evolving API DTOs.</li>
+        <li><strong>Multi-Layer Testing:</strong> Authored PHPUnit integration suites, Vitest component and accessibility (axe) tests, and Playwright end-to-end tests against the live API.</li>
+      </ul>
+
+      <h3>The Interesting Engineering</h3>
+
+      <h4>1. Modeling Multi-Adult Family Invariants</h4>
+      <p>
+        Rather than coupling children to a single household address or capping guardians at two, the family model treats the <em>Family</em> as the central operational unit:
+      </p>
+      <ul>
+        <li>Unlimited active adults per family with equal administrative visibility over children.</li>
+        <li>Polymorphic addresses cleanly separated across businesses, families, and emergency contacts.</li>
+        <li>Preservation of child records if a parent leaves a family unit, ensuring historical registrations and health disclosures remain intact.</li>
+      </ul>
+
+      <h4>2. Security-First Auth &amp; Anti-Enumeration</h4>
+      <p>
+        Account security was engineered to prevent timing-based user enumeration:
+      </p>
+      <ul>
+        <li><strong>Constant-Time Execution:</strong> When a user attempts to log in with an unrecognized email, the backend executes a dummy Argon2id verification with a precomputed hash to maintain identical timing profiles.</li>
+        <li><strong>Uniform Error Responses:</strong> Missing users, incorrect passwords, and inactive accounts return identical 422 error structures.</li>
+        <li><strong>Zero Raw Token Persistence:</strong> Live session tokens exist only in Redis with sliding TTLs; PostgreSQL stores only a one-way SHA-256 hash for historical audit logging.</li>
+      </ul>
+
+      <h4>3. Contract-Neutral Frontend Adapters</h4>
+      <p>
+        To prevent the frontend from hardcoding speculative backend endpoints or coupling UI components directly to raw API response shapes, I built a typed adapter layer. The React application binds to domain-level entities, allowing backend data models to evolve without triggering cascading UI rewrites.
+      </p>
+
+      <div class="callout-box">
+        <p><strong>Stage &amp; Implementation Status:</strong> The parent authentication and family vertical are fully implemented and running against the live internal API, backed by automated Playwright and PHPUnit suites. Producer catalogs, booking checkouts, and payment integrations are architected in the database schema for future rollout milestones.</p>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

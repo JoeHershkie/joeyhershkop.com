@@ -2,6 +2,87 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Joey Hershkop" description="Welcome to Joey Hershkop's official website.">
-  <p>Welcome to my official website.</p>
+<BaseLayout 
+  title="Joey Hershkop — Software Engineer & Builder" 
+  description="Joey Hershkop — Computer engineer building end-to-end software, exploring interdisciplinary ideas, and composing music."
+>
+  <div class="intro-section">
+    <p class="lead-text">
+      I'm Joey — a computer engineer (McGill '25) who builds software end-to-end and thinks across disciplines.
+    </p>
+
+    <p>
+      At a high-pace B2B SaaS startup, I've designed and shipped production systems end-to-end: financial billing infrastructure, HMAC-verified webhook ingestion, event-driven realtime pipelines, and role-based access control. I enjoy taking messy real-world constraints—from ambiguous municipal legal bylaws to strict financial state machines—and engineering reliable, tested software around them.
+    </p>
+
+    <p>
+      Outside of core engineering, I'm driven by broad curiosity. I spend a lot of time reading psychology, neuroscience, statistics, and philosophy, composing music, and diving into problems that don't fit neatly into a single discipline.
+    </p>
+
+    <p>
+      Explore my <a href="/work/" class="text-link">selected work & case studies</a>, download my <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="text-link">resume (PDF)</a>, listen to original <a href="/music/" class="text-link">music</a>, read my <a href="/blog/" class="text-link">writing on Substack</a>, or <a href="/contact/" class="text-link">get in touch</a>.
+    </p>
+  </div>
+
+  <section class="home-section" aria-labelledby="featured-work-heading">
+    <h3 id="featured-work-heading">Featured Projects & Case Studies</h3>
+    
+    <div class="work-list">
+      <article class="work-item">
+        <h3><a href="/work/parkking/" class="text-link">Parkking — Toronto Parking Bylaw Pipeline & Map</a></h3>
+        <p>
+          Turned 76,849 rows of unstructured Toronto parking bylaws written in legal prose into 21,433 geocoded curb segments on an interactive map. Built a Python ETL pipeline with Shapely graph-walking, road-edge matching, coverage atoms, and cross-language schedule parity tests.
+        </p>
+        <ul class="work-tags" aria-label="Technologies used">
+          <li>Python</li>
+          <li>GeoPandas</li>
+          <li>Shapely</li>
+          <li>React</li>
+          <li>MapLibre</li>
+          <li>SwiftUI</li>
+          <li>CI/CD</li>
+        </ul>
+        <div class="work-links">
+          <a href="/work/parkking/">Read Case Study &rarr;</a>
+          <a href="https://github.com/JoeHershkie/toronto-parking-map" target="_blank" rel="noopener noreferrer">GitHub Repo &rarr;</a>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <h3><a href="/work/stripe-billing/" class="text-link">B2B SaaS Stripe Billing & Ingestion Engine</a></h3>
+        <p>
+          Owned end-to-end subscription billing for a live B2B SaaS platform: raw HTTP body preservation middleware for HMAC signature verification, idempotent webhook processing to prevent replay attacks, and PostgreSQL state mirroring.
+        </p>
+        <ul class="work-tags" aria-label="Technologies used">
+          <li>PHP</li>
+          <li>PostgreSQL</li>
+          <li>Stripe API</li>
+          <li>Webhooks</li>
+          <li>Security</li>
+          <li>React</li>
+        </ul>
+        <div class="work-links">
+          <a href="/work/stripe-billing/">Read Case Study &rarr;</a>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <h3><a href="/work/reggeee/" class="text-link">Reggeee — Greenfield Family Activity Marketplace</a></h3>
+        <p>
+          Architected a two-sided marketplace from scratch: designed the PostgreSQL schema modeling non-traditional multi-adult families (divorced co-parents, guardians), built Argon2id auth with anti-enumeration protection, Redis session state, and a typed React 19 frontend.
+        </p>
+        <ul class="work-tags" aria-label="Technologies used">
+          <li>React 19</li>
+          <li>TypeScript</li>
+          <li>Slim 4</li>
+          <li>PostgreSQL</li>
+          <li>Redis</li>
+          <li>Argon2id</li>
+        </ul>
+        <div class="work-links">
+          <a href="/work/reggeee/">Read Case Study &rarr;</a>
+        </div>
+      </article>
+    </div>
+  </section>
 </BaseLayout>

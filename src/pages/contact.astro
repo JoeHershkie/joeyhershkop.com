@@ -2,6 +2,47 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Contact - Joey Hershkop" description="Get in touch with Joey Hershkop.">
-  <!-- Contact content / links will go here -->
+<BaseLayout 
+  title="Contact — Joey Hershkop" 
+  description="Get in touch with Joey Hershkop via email, phone, GitHub, LinkedIn, Substack, or Bandcamp."
+>
+  <h2>Contact</h2>
+  <p class="lead-text">
+    Feel free to reach out regarding engineering opportunities, collaborations, music inquiries, or just to connect.
+  </p>
+
+  <ul class="contact-directory">
+    <li class="contact-row">
+      <span class="contact-label">Email</span>
+      <span class="contact-value"><a href="mailto:jhershkop@gmail.com">jhershkop@gmail.com</a></span>
+    </li>
+    <li class="contact-row">
+      <span class="contact-label">Location</span>
+      <span class="contact-value">Toronto, ON</span>
+    </li>
+    <li class="contact-row">
+      <span class="contact-label">Phone</span>
+      <span class="contact-value"><a href="tel:+16478852679">(647) 885-2679</a></span>
+    </li>
+    <li class="contact-row">
+      <span class="contact-label">Resume</span>
+      <span class="contact-value"><a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Download PDF &rarr;</a></span>
+    </li>
+    <li class="contact-row">
+      <span class="contact-label">GitHub</span>
+      <span class="contact-value"><a href="https://github.com/JoeHershkie" target="_blank" rel="noopener noreferrer">github.com/JoeHershkie &rarr;</a></span>
+    </li>
+    <li class="contact-row">
+      <span class="contact-label">LinkedIn</span>
+      <span class="contact-value"><a href="https://linkedin.com/in/jhershkop" target="_blank" rel="noopener noreferrer">linkedin.com/in/jhershkop &rarr;</a></span>
+    </li>
+    <li class="contact-row">
+      <span class="contact-label">Substack</span>
+      <span class="contact-value"><a href="https://joeyhershkop.substack.com" target="_blank" rel="noopener noreferrer">joeyhershkop.substack.com &rarr;</a></span>
+    </li>
+    <li class="contact-row">
+      <span class="contact-label">Bandcamp</span>
+      <span class="contact-value"><a href="https://joeyhershkop.bandcamp.com" target="_blank" rel="noopener noreferrer">joeyhershkop.bandcamp.com &rarr;</a></span>
+    </li>
+  </ul>
 </BaseLayout>
