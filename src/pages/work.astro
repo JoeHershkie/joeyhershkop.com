@@ -4,109 +4,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout 
   title="Work & Projects — Joey Hershkop" 
-  description="Selected software engineering projects, production systems, and case studies by Joey Hershkop."
+  description="Selected software projects by Joey Hershkop: ParkKing, a Toronto curb parking app, and HoverBot, a vision-based navigation system."
 >
-  <h2>Selected Work &amp; Case Studies</h2>
+  <h2>Selected Work</h2>
   <p class="lead-text">
-    A selection of production systems, open-source data pipelines, and full-stack software architecture.
+    I'm a founding engineer at Thea, and the work I can show publicly is my own projects.
   </p>
 
   <div class="work-list">
     <article class="work-item">
-      <h3><a href="/work/parkking/" class="text-link">Parkking — Toronto Street Parking Intelligence Platform</a></h3>
+      <h3><a href="/work/parkking/" class="text-link">ParkKing — Toronto Curb Parking Platform</a></h3>
       <p>
-        An end-to-end geospatial system turning 76,849 rows of unstructured Toronto parking bylaws into 21,433 geocoded curb segments with instant offline verdicts across mobile and web:
+        An end-to-end system that turns Toronto's parking bylaws, written as legal prose, into curb-level rules and a free iPhone app that answers "can I park here?" for any time you choose, with no network needed:
       </p>
       <ul class="work-subcomponents">
-        <li><strong>Spatial ETL &amp; NLP Pipeline</strong> (<a href="https://github.com/JoeHershkie/parkking-pipeline" target="_blank" rel="noopener noreferrer" class="text-link"><code>parkking-pipeline</code></a>): Parses freeform legal text for temporal rules and geographic spans, resolves street intersections via Toronto Centreline graph search, and projects spans onto physical road edges using Shapely.</li>
-        <li><strong>Native iOS Client</strong> (<a href="https://github.com/JoeHershkie/parkking-ios" target="_blank" rel="noopener noreferrer" class="text-link"><code>parkking-ios</code></a>): Zero-dependency, offline-first mobile app featuring an instant curb bylaw evaluation engine and 60/120 fps viewport polyline batching.</li>
-        <li><strong>Interactive Web App</strong> (<a href="https://github.com/JoeHershkie/parkking-web" target="_blank" rel="noopener noreferrer" class="text-link"><code>parkking-web</code></a>): Mobile-first browser map for instant parking inspection, time scrubbing, and address lookup.</li>
+        <li><strong>Data pipeline</strong>: Python, GeoPandas and Shapely. Parses bylaw text for schedules and street spans, resolves them against the City's street network, and projects them onto physical curbs. A release carries about 82,000 curb features, plus ticket-derived paid-curb labels and ticket-risk estimates.</li>
+        <li><strong>iPhone app</strong>: Native SwiftUI and MapKit with no third-party dependencies. A bundled SQLite database with a spatial index and an on-device verdict engine. Live on the App Store.</li>
+        <li><strong>Android app</strong>: A Kotlin and Jetpack Compose port of the same verdict engine, in development.</li>
       </ul>
       <ul class="work-tags" aria-label="Technologies used">
         <li>Python</li>
         <li>GeoPandas &amp; Shapely</li>
         <li>SwiftUI</li>
         <li>MapKit</li>
-        <li>TypeScript</li>
-        <li>React &amp; MapLibre</li>
+        <li>Kotlin</li>
+        <li>SQLite</li>
         <li>Spatial ETL</li>
       </ul>
       <div class="work-links">
         <a href="/work/parkking/">Read Case Study &rarr;</a>
-        <a href="https://github.com/JoeHershkie/parkking" target="_blank" rel="noopener noreferrer">Main Repo &rarr;</a>
-        <a href="https://github.com/JoeHershkie/parkking-pipeline" target="_blank" rel="noopener noreferrer">Pipeline Repo &rarr;</a>
-        <a href="https://github.com/JoeHershkie/parkking-ios" target="_blank" rel="noopener noreferrer">iOS Repo &rarr;</a>
-        <a href="https://github.com/JoeHershkie/parkking-web" target="_blank" rel="noopener noreferrer">Web Repo &rarr;</a>
-      </div>
-    </article>
-
-    <article class="work-item">
-      <h3><a href="/work/stripe-billing/" class="text-link">B2B SaaS Stripe Billing &amp; Ingestion Engine</a></h3>
-      <p>
-        Owned end-to-end subscription billing for a live B2B SaaS platform: raw HTTP body preservation middleware for HMAC signature verification, idempotent webhook processing to prevent replay attacks, and PostgreSQL state mirroring.
-      </p>
-      <ul class="work-tags" aria-label="Technologies used">
-        <li>PHP</li>
-        <li>PostgreSQL</li>
-        <li>Stripe API</li>
-        <li>Webhooks</li>
-        <li>Security</li>
-        <li>React</li>
-      </ul>
-      <div class="work-links">
-        <a href="/work/stripe-billing/">Read Case Study &rarr;</a>
-      </div>
-    </article>
-
-    <article class="work-item">
-      <h3><a href="/work/reggeee/" class="text-link">Reggeee — Greenfield Family Activity Marketplace</a></h3>
-      <p>
-        Architected a two-sided marketplace from scratch: designed the PostgreSQL schema modeling non-traditional multi-adult families (divorced co-parents, guardians), built Argon2id auth with anti-enumeration protection, Redis session state, and a typed React 19 frontend.
-      </p>
-      <ul class="work-tags" aria-label="Technologies used">
-        <li>React 19</li>
-        <li>TypeScript</li>
-        <li>Slim 4</li>
-        <li>PostgreSQL</li>
-        <li>Redis</li>
-        <li>Argon2id</li>
-      </ul>
-      <div class="work-links">
-        <a href="/work/reggeee/">Read Case Study &rarr;</a>
-      </div>
-    </article>
-
-    <article class="work-item">
-      <h3><a href="/work/realtime-pipeline/" class="text-link">Event-Driven Realtime Pipeline</a></h3>
-      <p>
-        Engineered an event-driven pub/sub synchronization bridge using Ably that connects backend webhook mutations to frontend React Query state within milliseconds via automated query invalidation.
-      </p>
-      <ul class="work-tags" aria-label="Technologies used">
-        <li>Ably</li>
-        <li>Pub/Sub</li>
-        <li>TanStack Query</li>
-        <li>TypeScript</li>
-        <li>PHP</li>
-      </ul>
-      <div class="work-links">
-        <a href="/work/realtime-pipeline/">Read Case Study &rarr;</a>
-      </div>
-    </article>
-
-    <article class="work-item">
-      <h3>Auditable Documents Platform &amp; In-Browser Viewer</h3>
-      <p>
-        Built an end-to-end document sharing and review platform for collaborative B2B organization views. Implemented in-browser previews across PDF, image, and DOCX formats, append-only sharing audit ledgers, file conflict resolution flows, and Playwright e2e suites.
-      </p>
-      <ul class="work-tags" aria-label="Technologies used">
-        <li>React</li>
-        <li>TypeScript</li>
-        <li>PostgreSQL</li>
-        <li>DOCX / PDF Preview</li>
-        <li>Playwright</li>
-      </ul>
-      <div class="work-links">
-        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">View in Resume &rarr;</a>
+        <a href="https://getparkking.com" target="_blank" rel="noopener noreferrer">getparkking.com &rarr;</a>
+        <a href="https://apps.apple.com/app/id6806915547" target="_blank" rel="noopener noreferrer">App Store &rarr;</a>
       </div>
     </article>
 
@@ -122,9 +50,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <li>Threading</li>
         <li>Robotics</li>
       </ul>
-      <div class="work-links">
-        <a href="https://github.com/JoeHershkie" target="_blank" rel="noopener noreferrer">GitHub Profile &rarr;</a>
-      </div>
     </article>
   </div>
 </BaseLayout>
