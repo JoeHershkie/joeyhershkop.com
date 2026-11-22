@@ -1,7 +1,8 @@
 /* --- UNIVERSAL STYLES --- */
 @font-face {
   font-family: 'Apple Garamond';
-  src: url('/fonts/AppleGaramond-Light.ttf') format('truetype');
+  src: url('/fonts/AppleGaramond-Light.woff2') format('woff2'),
+       url('/fonts/AppleGaramond-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -80,8 +81,12 @@ main {
   flex-grow: 1;
 }
 
+h1, h2, h3, h4 {
+  font-weight: normal;
+}
+
 /* --- TYPOGRAPHY HIERARCHY (Fluid clamp scaling) --- */
-h1 {
+.site-name {
   font-size: clamp(2.75rem, 10.35vw, 6.5rem);
   font-weight: normal;
   line-height: 1.05;
@@ -89,16 +94,16 @@ h1 {
   text-align: left;
 }
 
-h1 a {
+.site-name a {
   color: inherit;
   text-decoration: none;
 }
 
-h1 a:hover {
+.site-name a:hover {
   text-decoration: underline;
 }
 
-h2 {
+h1 {
   font-size: clamp(1.75rem, 5.2vw, 2.75rem);
   font-weight: normal;
   line-height: 1.2;
@@ -106,7 +111,7 @@ h2 {
   text-align: left;
 }
 
-h3 {
+h2 {
   font-size: clamp(1.3rem, 2.9vw, 1.75rem);
   font-weight: normal;
   line-height: 1.3;
@@ -185,12 +190,14 @@ footer p {
   padding-bottom: 0;
 }
 
+.work-item h2,
 .work-item h3 {
   font-size: clamp(1.45rem, 2.8vw, 2.05rem);
   line-height: 1.25;
   margin: 0 0 0.65rem 0;
 }
 
+.work-item h2 a,
 .work-item h3 a {
   color: #000000;
   text-decoration: underline;
@@ -366,12 +373,12 @@ audio {
   margin: 0.5rem 0 1rem 0;
 }
 
-.case-study-content h3 {
+.case-study-content h2 {
   margin-top: 2.25rem;
   margin-bottom: 0.75rem;
 }
 
-.case-study-content h4 {
+.case-study-content h3 {
   font-size: 1.2rem;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
@@ -498,9 +505,14 @@ strong, b {
   padding-top: 2rem;
 }
 
+.home-section > h2,
 .home-section h3 {
   font-size: 1.5rem;
   margin-bottom: 1.25rem;
+}
+
+.home-section > h2 {
+  line-height: 1.3;
 }
 
 .case-study-gallery {
