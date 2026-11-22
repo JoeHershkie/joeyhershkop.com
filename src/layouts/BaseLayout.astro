@@ -10,7 +10,7 @@ interface Props {
 const {
   title = "Joey Hershkop",
   description = "Joey Hershkop - Official Website",
-  image = "/favicon.svg"
+  image = "/og.png"
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -21,6 +21,7 @@ const isCurrent = (path: string) => {
 };
 
 const canonicalURL = Astro.url.href;
+const imageURL = new URL(image, Astro.site ?? Astro.url.origin).href;
 const currentYear = new Date().getFullYear();
 ---
 
@@ -40,15 +41,15 @@ const currentYear = new Date().getFullYear();
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={image} />
+  <meta property="og:image" content={imageURL} />
   <meta property="og:site_name" content="Joey Hershkop" />
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content={canonicalURL} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
-  <meta property="twitter:image" content={image} />
+  <meta property="twitter:image" content={imageURL} />
 
   <title>{title}</title>
 </head>

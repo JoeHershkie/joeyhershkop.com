@@ -4,84 +4,65 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout 
   title="Joey Hershkop — Software Engineer & Builder" 
-  description="Joey Hershkop — Computer engineer building end-to-end software, exploring interdisciplinary ideas, and composing music."
+  description="Joey Hershkop — Toronto software engineer (McGill '25). Founding engineer at Thea, and the builder of ParkKing, a Toronto curb parking app."
 >
   <div class="intro-section">
     <p class="lead-text">
-      I'm Joey — a computer engineer (McGill '25) who builds software end-to-end and thinks across disciplines.
+      I'm Joey — a computer engineer (McGill '25) in Toronto who builds software end-to-end and thinks across disciplines.
     </p>
 
     <p>
-      At a high-pace B2B SaaS startup, I've designed and shipped production systems end-to-end: financial billing infrastructure, HMAC-verified webhook ingestion, event-driven realtime pipelines, and role-based access control. I enjoy taking messy real-world constraints—from ambiguous municipal legal bylaws to strict financial state machines—and engineering reliable, tested software around them.
+      I'm the founding engineer at Thea, an early-stage startup that places private residential mortgage deals in Ontario. Before that I spent a year building a production B2B SaaS platform: PostgreSQL schemas, APIs, React clients, billing, access control, and the tests around them.
     </p>
 
     <p>
-      Outside of core engineering, I'm driven by broad curiosity. I spend a lot of time reading psychology, neuroscience, statistics, and philosophy, composing music, and diving into problems that don't fit neatly into a single discipline.
+      On my own time I build <a href="/work/parkking/" class="text-link">ParkKing</a>, a free iPhone app that shows whether you can park at any curb in Toronto, for the time you choose. It started as a data problem, turning the City's parking bylaws, written as legal prose, into a map, and it is now live on the App Store with an Android version in the works.
     </p>
 
     <p>
-      Explore my <a href="/work/" class="text-link">selected work & case studies</a>, download my <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="text-link">resume (PDF)</a>, listen to <a href="/music/" class="text-link">music</a>, check out upcoming <a href="/blog/" class="text-link">writing</a>, or <a href="/contact/" class="text-link">get in touch</a>.
+      Outside of engineering, I'm driven by broad curiosity. I spend a lot of time reading psychology, neuroscience, statistics, and philosophy, composing music, and diving into problems that don't fit neatly into a single discipline.
+    </p>
+
+    <p>
+      Explore my <a href="/work/" class="text-link">selected work</a>, download my <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="text-link">resume (PDF)</a>, listen to <a href="/music/" class="text-link">music</a>, check out upcoming <a href="/blog/" class="text-link">writing</a>, or <a href="/contact/" class="text-link">get in touch</a>.
     </p>
   </div>
 
   <section class="home-section" aria-labelledby="featured-work-heading">
-    <h3 id="featured-work-heading">Featured Projects & Case Studies</h3>
+    <h3 id="featured-work-heading">Featured Projects</h3>
     
     <div class="work-list">
       <article class="work-item">
-        <h3><a href="/work/parkking/" class="text-link">Parkking — Toronto Parking Bylaw Pipeline & Map</a></h3>
+        <h3><a href="/work/parkking/" class="text-link">ParkKing — Toronto Curb Parking, Live on the App Store</a></h3>
         <p>
-          Turned 76,849 rows of unstructured Toronto parking bylaws written in legal prose into 21,433 geocoded curb segments on an interactive map. Built a Python ETL pipeline with Shapely graph-walking, road-edge matching, coverage atoms, and cross-language schedule parity tests.
+          A free iPhone app that colour-codes every curb in Toronto for the time you'll be there. I built the Python pipeline that turns the City's bylaws and ticket data into curb-level rules, and the native app that evaluates them offline, instantly.
         </p>
         <ul class="work-tags" aria-label="Technologies used">
           <li>Python</li>
           <li>GeoPandas</li>
           <li>Shapely</li>
-          <li>React</li>
-          <li>MapLibre</li>
           <li>SwiftUI</li>
-          <li>CI/CD</li>
+          <li>MapKit</li>
+          <li>SQLite</li>
+          <li>Kotlin</li>
         </ul>
         <div class="work-links">
           <a href="/work/parkking/">Read Case Study &rarr;</a>
-          <a href="https://github.com/JoeHershkie/parkking" target="_blank" rel="noopener noreferrer">GitHub Repo &rarr;</a>
+          <a href="https://getparkking.com" target="_blank" rel="noopener noreferrer">getparkking.com &rarr;</a>
         </div>
       </article>
 
       <article class="work-item">
-        <h3><a href="/work/stripe-billing/" class="text-link">B2B SaaS Stripe Billing & Ingestion Engine</a></h3>
+        <h3>HoverBot — Vision-Based Navigation System</h3>
         <p>
-          Owned end-to-end subscription billing for a live B2B SaaS platform: raw HTTP body preservation middleware for HMAC signature verification, idempotent webhook processing to prevent replay attacks, and PostgreSQL state mirroring.
+          A multithreaded computer-vision pipeline in Python and OpenCV that sustains 30 fps with &le; 100 ms image-to-actuation latency and &plusmn; 3 cm mean arrival error across 30 physical waypoints.
         </p>
         <ul class="work-tags" aria-label="Technologies used">
-          <li>PHP</li>
-          <li>PostgreSQL</li>
-          <li>Stripe API</li>
-          <li>Webhooks</li>
-          <li>Security</li>
-          <li>React</li>
+          <li>Python</li>
+          <li>OpenCV</li>
+          <li>NumPy</li>
+          <li>Robotics</li>
         </ul>
-        <div class="work-links">
-          <a href="/work/stripe-billing/">Read Case Study &rarr;</a>
-        </div>
-      </article>
-
-      <article class="work-item">
-        <h3><a href="/work/reggeee/" class="text-link">Reggeee — Greenfield Family Activity Marketplace</a></h3>
-        <p>
-          Architected a two-sided marketplace from scratch: designed the PostgreSQL schema modeling non-traditional multi-adult families (divorced co-parents, guardians), built Argon2id auth with anti-enumeration protection, Redis session state, and a typed React 19 frontend.
-        </p>
-        <ul class="work-tags" aria-label="Technologies used">
-          <li>React 19</li>
-          <li>TypeScript</li>
-          <li>Slim 4</li>
-          <li>PostgreSQL</li>
-          <li>Redis</li>
-          <li>Argon2id</li>
-        </ul>
-        <div class="work-links">
-          <a href="/work/reggeee/">Read Case Study &rarr;</a>
-        </div>
       </article>
     </div>
   </section>
