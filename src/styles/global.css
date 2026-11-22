@@ -12,7 +12,7 @@
   --paper: #f7eeda;
   --ink: #000000;
   --ink-rgb: 0, 0, 0;
-  --paper-texture-opacity: 0.9;
+  --grain-opacity: 0.7;
   color-scheme: light;
 }
 
@@ -21,7 +21,7 @@
     --paper: #1b1915;
     --ink: #efe5cf;
     --ink-rgb: 239, 229, 207;
-    --paper-texture-opacity: 0.5;
+    --grain-opacity: 0.45;
     color-scheme: dark;
   }
 }
@@ -56,17 +56,17 @@ body {
   paint-order: stroke fill;
 }
 
-/* Paper texture: fixed behind the page, so it stays still while content scrolls */
+/* Film grain: fixed behind the page, so it stays still while content scrolls */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url('/images/paper.jpg');
-  background-size: 384px 384px;
+  background-image: url('/images/grain.png');
+  background-size: 160px 160px;
   mix-blend-mode: soft-light;
-  opacity: var(--paper-texture-opacity);
+  opacity: var(--grain-opacity);
 }
 
 /* Accessibility Skip Link */
