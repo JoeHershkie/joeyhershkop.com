@@ -12,6 +12,7 @@
   --paper: #f7eeda;
   --ink: #000000;
   --ink-rgb: 0, 0, 0;
+  --paper-texture-opacity: 0.9;
   color-scheme: light;
 }
 
@@ -20,6 +21,7 @@
     --paper: #1b1915;
     --ink: #efe5cf;
     --ink-rgb: 239, 229, 207;
+    --paper-texture-opacity: 0.5;
     color-scheme: dark;
   }
 }
@@ -35,6 +37,7 @@ img {
 }
 
 html {
+  background-color: var(--paper);
   font-size: 115%; /* Scales entire site equivalent to a 115% page zoom */
   height: 100%;
 }
@@ -44,13 +47,26 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: var(--paper);
+  background: transparent;
   color: var(--ink);
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;
   text-rendering: optimizeLegibility;
   -webkit-text-stroke: 0.18px currentColor;
   paint-order: stroke fill;
+}
+
+/* Paper texture: fixed behind the page, so it stays still while content scrolls */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/images/paper.jpg');
+  background-size: 384px 384px;
+  mix-blend-mode: soft-light;
+  opacity: var(--paper-texture-opacity);
 }
 
 /* Accessibility Skip Link */
