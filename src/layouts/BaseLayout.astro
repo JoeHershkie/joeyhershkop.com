@@ -22,6 +22,7 @@ const isCurrent = (path: string) => {
 
 const canonicalURL = Astro.url.href;
 const imageURL = new URL(image, Astro.site ?? Astro.url.origin).href;
+const isHome = currentPath === '/';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -31,10 +32,12 @@ const currentYear = new Date().getFullYear();
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
-  <meta name="theme-color" content="#f7eeda" />
+  <meta name="theme-color" content="#f7eeda" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1b1915" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href={canonicalURL} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preload" href="/fonts/AppleGaramond-Light.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/AppleGaramond-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -52,19 +55,23 @@ const currentYear = new Date().getFullYear();
   <meta property="twitter:image" content={imageURL} />
 
   <title>{title}</title>
+  <slot name="head" />
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="site-container">
     <header>
-      <h1><a href="/">Joey Hershkop</a></h1>
+      {isHome
+        ? <h1 class="site-name"><a href="/">Joey Hershkop</a></h1>
+        : <p class="site-name"><a href="/">Joey Hershkop</a></p>}
     </header>
     <nav aria-label="Main Navigation">
       <ul>
         <li><a href="/work/" aria-current={isCurrent('/work') ? "page" : undefined}>Work</a></li>
+        <li><a href="https://getparkking.com">ParkKing</a></li>
         <li><a href="/music/" aria-current={isCurrent('/music') ? "page" : undefined}>Music</a></li>
         <li><a href="/blog/" aria-current={isCurrent('/blog') ? "page" : undefined}>Blog</a></li>
-        <li><a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
+        <li><a href="/resume.pdf">Resume</a></li>
         <li><a href="/contact/" aria-current={isCurrent('/contact') ? "page" : undefined}>Contact</a></li>
       </ul>
     </nav>

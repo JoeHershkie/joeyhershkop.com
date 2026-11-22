@@ -11,7 +11,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <article class="case-study">
     <header class="case-study-header">
-      <h2>ParkKing: Turning Toronto's Parking Bylaws Into a Live Curb Map</h2>
+      <h1>ParkKing: Turning Toronto's Parking Bylaws Into a Live Curb Map</h1>
       <p class="case-study-meta">
         Solo project &bull; Python (data pipeline), Swift and SwiftUI (iPhone), Kotlin (Android, in development)
       </p>
@@ -52,7 +52,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </figure>
       </div>
 
-      <h3>The Problem</h3>
+      <h2>The Problem</h2>
       <p>
         The City of Toronto publishes parking restrictions as open data, but each one is recorded as descriptive legal prose rather than coordinates:
       </p>
@@ -65,7 +65,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         To know whether you can park on a specific curb at 2:30 PM on a Tuesday, you have to parse that text, resolve the street names and intersections against the City's road network, place the rule on the right side of the right block, and reconcile bylaws that overlap. Then it all has to answer in a moment, on a phone, with a weak signal.
       </p>
 
-      <h3>What I Built</h3>
+      <h2>What I Built</h2>
       <ul>
         <li><strong>Data pipeline.</strong> An installable Python package using GeoPandas and Shapely. It parses freeform bylaw text into structured schedules, walks the Toronto Centreline street graph to resolve intersections, projects spans onto physical road-edge polygons, and exports a versioned, hash-pinned SQLite release with a spatial index. The current release carries about 82,000 curb features.</li>
         <li><strong>iPhone app.</strong> A native SwiftUI and MapKit app with no third-party dependencies. It opens the bundled database read-only, answers viewport and tap queries through an R-tree index, and evaluates the verdict for the time and length of stay you choose, entirely on the device. It's live on the App Store and free.</li>
@@ -73,29 +73,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <li><strong>Product site.</strong> <a href="https://getparkking.com" target="_blank" rel="noopener noreferrer" class="text-link">getparkking.com</a>, a static site on Cloudflare Pages with a small Worker for snow-route status.</li>
       </ul>
 
-      <h3>The Interesting Engineering</h3>
+      <h2>The Interesting Engineering</h2>
 
-      <h4>1. Legal Prose &rarr; Typed Rules</h4>
+      <h3>1. Legal Prose &rarr; Typed Rules</h3>
       <p>
         Free-text descriptions vary widely across decades of municipal amendments. An ordered pattern-matching engine classifies them into typed rules. Anything it can't place goes to a failure ledger with the stage and reason, rather than being dropped, so each round of fixes starts from the biggest class of failures.
       </p>
 
-      <h4>2. Local Graph-Walking and Curb Projection</h4>
+      <h3>2. Local Graph-Walking and Curb Projection</h3>
       <p>
         The pipeline runs on local copies of the City's street and intersection data instead of calling a geocoding API. It finds the intersecting street nodes, measures metric offsets along the centreline, and projects the span onto the physical curb, falling back to calibrated parallel offsets where the road-edge data is missing.
       </p>
 
-      <h4>3. Overlapping Bylaws</h4>
+      <h3>3. Overlapping Bylaws</h3>
       <p>
         A block can carry a rush-hour no-parking rule and a metered-parking rule at once. The pipeline splits overlapping rules into non-overlapping pieces that each remember every rule behind them, so the app can apply precedence without hiding a conflicting restriction.
       </p>
 
-      <h4>4. Ticket Data as a Second Source of Truth</h4>
+      <h3>4. Ticket Data as a Second Source of Truth</h3>
       <p>
         Seven years of City parking-ticket data tells me where enforcement and the map disagree. It labels likely paid curbs, sizes TTC stop zones, flags curbs where officers enforce a rule the map doesn't have, and powers an "how often is this block ticketed" estimate. The iPhone app replays real tickets through its own verdict engine to count the cases where it would have wrongly said parking was allowed.
       </p>
 
-      <h4>5. One Rule Engine, Several Languages</h4>
+      <h3>5. One Rule Engine, Several Languages</h3>
       <p>
         Schedules involve Ontario statutory holidays, seasonal rules and overnight windows. The logic has to behave the same in Python, Swift and Kotlin, so it's checked against shared fixtures, with golden-file regression tests and CI around the pipeline.
       </p>
@@ -104,7 +104,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <p><strong>A note on accuracy:</strong> ParkKing is a guide, not legal advice. Signs on the street win, and the app says so. The ticket-based checks are how I measure where the map is still wrong.</p>
       </div>
 
-      <h3>Key Takeaways</h3>
+      <h2>Key Takeaways</h2>
       <p>
         Treating a side project like production software paid off: a failure ledger, golden tests, versioned data releases and a second data source to audit the first. The hardest part wasn't drawing lines on a map. It was making a deterministic, checkable system out of ambiguous legal text.
       </p>

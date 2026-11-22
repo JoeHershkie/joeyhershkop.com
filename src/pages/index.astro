@@ -6,9 +6,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title="Joey Hershkop — Software Engineer & Builder" 
   description="Joey Hershkop — Toronto software engineer (McGill '25). Founding engineer at Thea, and the builder of ParkKing, a Toronto curb parking app."
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Joey Hershkop",
+    url: "https://joeyhershkop.com",
+    jobTitle: "Founding Engineer",
+    worksFor: { "@type": "Organization", name: "Thea" },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "McGill University" },
+    address: { "@type": "PostalAddress", addressLocality: "Toronto", addressRegion: "ON", addressCountry: "CA" },
+    sameAs: [
+      "https://github.com/JoeHershkie",
+      "https://linkedin.com/in/jhershkop",
+      "https://joeyhershkop.substack.com",
+      "https://joeyhershkop.bandcamp.com"
+    ]
+  })} />
   <div class="intro-section">
     <p class="lead-text">
-      I'm Joey — a computer engineer (McGill '25) in Toronto who builds software end-to-end and thinks across disciplines.
+      I'm Joey — a software engineer in Toronto, with a computer engineering degree from McGill ('25), who builds software end-to-end and thinks across disciplines.
     </p>
 
     <p>
@@ -24,12 +40,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
 
     <p>
-      Explore my <a href="/work/" class="text-link">selected work</a>, download my <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="text-link">resume (PDF)</a>, listen to <a href="/music/" class="text-link">music</a>, check out upcoming <a href="/blog/" class="text-link">writing</a>, or <a href="/contact/" class="text-link">get in touch</a>.
+      Explore my <a href="/work/" class="text-link">selected work</a>, download my <a href="/resume.pdf" class="text-link">resume (PDF)</a>, listen to <a href="/music/" class="text-link">music</a>, check out upcoming <a href="/blog/" class="text-link">writing</a>, or <a href="/contact/" class="text-link">get in touch</a>.
     </p>
   </div>
 
   <section class="home-section" aria-labelledby="featured-work-heading">
-    <h3 id="featured-work-heading">Featured Projects</h3>
+    <h2 id="featured-work-heading">Featured Projects</h2>
     
     <div class="work-list">
       <article class="work-item">
@@ -47,7 +63,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <li>Kotlin</li>
         </ul>
         <div class="work-links">
-          <a href="/work/parkking/">Read Case Study &rarr;</a>
+          <a href="/work/parkking/" aria-label="Read the ParkKing case study">Read Case Study &rarr;</a>
           <a href="https://getparkking.com" target="_blank" rel="noopener noreferrer">getparkking.com &rarr;</a>
         </div>
       </article>
